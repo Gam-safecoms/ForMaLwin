@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <template id="rfq_lines" name="RFQ Data">
+      <t t-set="th_style" t-value="'border-bottom: 1px solid #ddd !important;white-space:nowrap;'"/>
+      <div t-if="o.project_title" class="col-xs-12" t-attf-style="color:{{style.theme_txt_color if not style.transparent else style.text_color}};text-align:center; padding-left:0px; padding-right:0px;">
+        <div t-attf-style="width:auto; display:inline-block; background-color:{{style.theme_color if not style.transparent else 'transparent'}};padding-left:8px; padding-right:8px;">
+          <span t-attf-style="margin-top:8px; margin-bottom:8px;font-size:{{style.body_font+4}}px;"><span t-field="o.project_title"/></span>
+        </div>
+      </div>
+      <table class="table  table-condensed" t-attf-style="color:{{style.text_color}};" >
+        <thead t-attf-style="background-color:{{style.theme_color if not style.transparent else 'transparent'}}; page-break-inside: avoid; color:{{style.theme_txt_color  if not style.transparent else style.text_color}};">
+          <tr t-attf-style="page-break-inside: avoid !important; border-bottom: 1px solid {{style.text_color}} !important;font-size:{{style.body_font+2}}px;">
+            <th t-attf-style="{{th_style}}">Item</th>
+            <th t-attf-style="{{th_style}}">Description</th>
+            <th class="text-center" t-attf-style="{{th_style}}">Expected Date</th>
+            <th class="text-right" t-attf-style="{{th_style}}">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <t t-foreach="o.order_line" t-as="line">
+            <tr t-attf-style="background-color:{{tyle.odd if (line_parity in 'odd' and not style.transparent) else (not style.transparent and style.even)  or 'transparent'}; page-break-inside: avoid !important;">
+              <td><span t-esc="line_index + 1"/></td>
+              <td><span t-field="line.name"/></td>
+              <td class="text-center"><span t-field="line.date_planned" t-field-options='{"widget": "date"}'/></td>
+              <td class="text-right">
+                <span t-field="line.product_qty"/>
+                <span t-field="line.product_uom" groups="product.group_uom"/>
+              </td>
+            </tr>
+          </t>
+        </tbody>
+      </table>
+      <div class="col-xs-12 pull-left" style="padding-left:0px; padding-right:0px; page-break-inside: avoid ! important;">
+        <p t-if="o.payment_term_id.note"><span t-field="o.payment_term_id.note"/></p>
+        <p t-if="o.incoterm_id"><span>Shipping:</span><span t-field="o.incoterm_id"/></p>
+        <p id="payment_term" t-if="not o.payment_term_id and o.partner_id.property_payment_term_id"><span t-field="o.partner_id.property_payment_term_id.note"/></p>
+        <!--<p t-if="o.fiscal_position_id.note"><strong>Fiscal Position Remark:</strong> <span t-field="o.fiscal_position_id.note"/></p>-->
+        <p t-if="o.notes"><span t-field="o.notes"/></p>
+      </div>
+      <div class="col-xs-12" style="padding-left:0px; padding-right:0px; page-break-inside: avoid;">
+        <div class="col-xs-6 pull-left mt16 row" style="padding-left:0px; padding-right:0px; page-break-inside: avoid;">
+          <p><strong>For Acceptance And Order confirmation</strong></p>
+          <p><strong>Supplier Signature:</strong><span t-esc="35*'.'"/></p>
+          <p><strong>Date:</strong><span t-esc="35*'.'"/></p>
+          <p><strong>Company Seal:</strong></p>
+        </div>
+        <div class="col-xs-6 pull-right" style="padding-left:0px; padding-right:0px; page-break-inside: avoid;">
+          <p><strong>For and on behalf of Buyer Faber Flags Asia Co., Ltd.</strong></p>
+          <p><span t-field="o.purchase_user_id"/></p>
+          <p>Email:<span t-field="o.purchase_user_id.email"/></p>
+          <p>Phone: <span t-field="o.purchase_user_id.partner_id.phone"/></p>
+          <p><span t-if="o.purchase_user_id.document_signature"><span itemprop="image" t-field="o.purchase_user_id.document_signature_medium" t-field-options='{"widget": "image"}'/></span></p>
+          <p><strong>Company Seal:</strong></p>
+          <p><img class="img img-responsive" src="/ffa_professional_templates/static/src/img/FFA_Company_Stamp.png"/></p>
+        </div>
+      </div>
+    </template>
+  </data>
+</openerp>

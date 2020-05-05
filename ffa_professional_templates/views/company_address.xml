@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!--This is important workaround to achieve transparency for watermark reports -->
+    <template id="report_layout" inherit_id="web.report_layout">
+      <xpath expr="//body" position="attributes">
+        <attribute name="style">background-color:transparent;</attribute>
+      </xpath>
+    </template>
+    <!--This is important workaround to achieve transparency for watermark reports -->
+    <template id="minimal_layout" inherit_id="web.minimal_layout">
+      <xpath expr="//body" position="attributes">
+        <attribute name="style">background-color:transparent !important;</attribute>
+      </xpath>
+    </template>
+    <template id="company_address" name="Company Address">
+      <div t-field="company.name" t-attf-style="color:{{style.name_color}}; white-space:nowrap; font-size:{{style.header_font+6}}px; font-weight:500;"/>
+      <div t-attf-style="color:{{style.name_color}}; white-space:nowrap; font-size:{{style.header_font+6}}px; font-weight:500;">บริษัท ฟาเบอร์ แฟลกส์ เอเชีย จำกัด</div>
+      <div style="margin-bottom:0px; padding-bottom:0px; white-space:nowrap;"><i class="fa fa-map-marker"/> 1 MD Tower, 18th Floor C1, Soi Bangna-Trad 25, Bangna-Trad Rd., Bangna Nuea, Bangna, Bangkok, 10260, Thailand</div>
+      <div style="margin-bottom:0px; padding-bottom:0px; white-space:nowrap;"><i class="fa fa-map-marker"/> เลขที่ 1 อาคาร เอ็มดี ทาวเวอร์  ชั้น 18 ซี 1 ซ.บางนา-ตราด 25 ถ.บางนา-ตราด แขวงบางนาเหนือ เขตบางนา กทม. 10260</div>
+      <div style="margin-bottom:0px; padding-bottom:0px; white-space:nowrap;"><p style="margin-bottom:0px; padding-top:0px;"><i class="fa fa-certificate" aria-hidden="true"/> <span t-if="company.vat">ทะเบียนนิติบุคคลเลขที่ (Company Registration No): <span t-field="company.vat"/></span></p></div>
+      <!--<div t-field="company.partner_id" style="margin-bottom:0px; padding-bottom:0px; white-space:nowrap;" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;phone&quot;,  &quot;email&quot;, &quot;website&quot;], &quot;no_marker&quot;: false}"/>-->
+      <div style="margin-bottom:0px; padding-bottom:0px; white-space:nowrap;"><span t-if="company.phone"><i class="fa fa-phone-square"/> <span t-field="company.phone"/></span>   <span t-if="company.email"><i class="fa fa-envelope"/> <span t-field="company.email"/></span>   <i class="fa fa-globe"/> "www.faberflagsasia.com"</div>
+    </template>
+  </data>
+</openerp>
+
